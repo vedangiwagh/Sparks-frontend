@@ -2,42 +2,32 @@
 import React from 'react';
 import RecipeCard from '../components/RecipeCard';
 import IngredientCard from '../components/IngredientCard';
-
-import IngredientCard from '../components/IngredientCard';
+import { BrowserRouter as Router, Routes, Route , Link} from 'react-router-dom';
 import MealCard from '../components/MealCard';
+import '../styles/Dashboard.css';
 const Home = () => {
-const recipeData = {
-    title: 'Spaghetti Bolognese',
-    ingredients: ['Spaghetti', 'Ground beef', 'Tomato sauce', 'Onion', 'Garlic', 'Herbs']
-    title: 'Recipes',
 
-  };
-const IngredientData = {
-    title: 'Ingredients',
-};
-const MealData = {
-    title: 'Meals',
-};
 
-  const ingredientData = {
-      name: 'Black Beans',
-      calories: 127.0,
-      fat: 0.5,
-      carbohydrates: 23.0,
-      fiber: 7.6,
-      sugar: 0.0,
-      protein: 8.9,
-      sodium: 473.0,
-    };
 
 
   return (
     <div>
       <h1>WiseBites App</h1>
-      <RecipeCard {...recipeData} />
-      <MealCard {...IngredientData} />
-      <IngredientCard {...IngredientData} />
-      <IngredientCard {...ingredientData} />
+
+<div className="app-container">
+<Link to="/recipes" className="tile" id="recipes">
+              <h2>Recipes</h2>
+            </Link>
+            <Link to="/mealPlan" className="tile" id="mealPlan">
+                          <h2>Get Meal Plan</h2>
+                </Link>
+            <Link to="/ingredients" className="tile" id="ingredients">
+              <h2>Ingredients</h2>
+            </Link>
+
+</div>
+
+
     </div>
   );
 };
