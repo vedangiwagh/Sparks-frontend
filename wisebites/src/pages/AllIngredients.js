@@ -2,18 +2,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import IngredientCard from '../components/IngredientCard';
+import '../styles/AllIngredients.css';
 
 const AllIngredients = () => {
-  const ingredientData = {
-      name: 'Black Beans',
-      calories: 127.0,
-      fat: 0.5,
-      carbohydrates: 23.0,
-      fiber: 7.6,
-      sugar: 0.0,
-      protein: 8.9,
-      sodium: 473.0,
-    };
+
 const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
@@ -25,12 +17,13 @@ const [ingredients, setIngredients] = useState([]);
   }, []);
 
   return (
-    <div>
-      <h1> Ingredients Page</h1>
-
+  <div>
+  <h1> Ingredient List </h1>
+    <div className="card-container">
       {ingredients.map((ingredient) => (
-             <IngredientCard key={ingredient.id} {...ingredient} />
-           ))}
+        <IngredientCard key={ingredient.id} {...ingredient} />
+      ))}
+    </div>
     </div>
   );
 };
