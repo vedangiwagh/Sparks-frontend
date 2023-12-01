@@ -3,11 +3,21 @@ import React from 'react';
 import RecipeCard from '../components/RecipeCard';
 import IngredientCard from '../components/IngredientCard';
 
+import IngredientCard from '../components/IngredientCard';
+import MealCard from '../components/MealCard';
 const Home = () => {
 const recipeData = {
     title: 'Spaghetti Bolognese',
     ingredients: ['Spaghetti', 'Ground beef', 'Tomato sauce', 'Onion', 'Garlic', 'Herbs']
+    title: 'Recipes',
+
   };
+const IngredientData = {
+    title: 'Ingredients',
+};
+const MealData = {
+    title: 'Meals',
+};
 
   const ingredientData = {
       name: 'Black Beans',
@@ -25,6 +35,8 @@ const recipeData = {
     <div>
       <h1>WiseBites App</h1>
       <RecipeCard {...recipeData} />
+      <MealCard {...IngredientData} />
+      <IngredientCard {...IngredientData} />
       <IngredientCard {...ingredientData} />
     </div>
   );
