@@ -1,28 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/MealPlan.css'; // Import your CSS file for styling
+import '../styles/MealPlan.css';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const MealPlan = () => {
   const [mealType, setMealType] = useState('');
   const [recipeType, setRecipeType] = useState('');
-  const [dietaryRestrictions, setDietaryRestrictions] = useState([]);
+  const [dietRestrictions, setDietRestrictions] = useState([]);
   const [calorieLimit, setCalorieLimit] = useState(0);
-  const [recipes, setRecipes] = useState([]);
+  const [clientId, setClientId] = useState(0);
+  const [clientName, setClientName] = useState('');
+  const [meals, setMeals] = useState([]);
 
-  const handleSubmit = () => {
-    // Make API call with form data
-    // ...
+  const decreaseCalorieLimit = () => {
+    setCalorieLimit((prevCalorieLimit) => prevCalorieLimit - 50);
+  };
 
+  const increaseCalorieLimit = () => {
+    setCalorieLimit((prevCalorieLimit) => prevCalorieLimit + 50);
   };
 
   useEffect(() => {
-    // Fetch recipes and setRecipes logic
-    // ...
+    const fetchMeals = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/meals/getMealClientSpecific`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-  }, []); // Empty dependency array means the effect runs once after the first render
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setMeals(data);
+      } catch (error) {
+        console.error('Error fetching meals:', error);
+      }
+    };
+
+    fetchMeals();
+  }, [mealType, recipeType, clientId, clientName, dietRestrictions, calorieLimit]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // You can perform additional logic here if needed
+  };
 
   return (
     <div className="meal-plan">
-      {/* Upper half: Form */}
       <div className="form-container">
         <h2>Meal Plan Form</h2>
         <form onSubmit={handleSubmit}>
@@ -30,53 +58,60 @@ const MealPlan = () => {
             Meal Type:
             <input type="text" value={mealType} onChange={(e) => setMealType(e.target.value)} />
           </label>
+
           <label>
             Recipe Type:
             <input type="text" value={recipeType} onChange={(e) => setRecipeType(e.target.value)} />
           </label>
+
           <label>
-            Dietary Restrictions:
+            Diet Restrictions:
             <select
               multiple
-              value={dietaryRestrictions}
-              onChange={(e) => setDietaryRestrictions(Array.from(e.target.selectedOptions, (option) => option.value))}
+              value={dietRestrictions}
+              onChange={(e) =>
+                setDietRestrictions(Array.from(e.target.selectedOptions, (option) => option.value))
+              }
             >
-              <option value="Vegetarian">Vegetarian</option>
-              <option value="Vegan">Vegan</option>
-              {/* Add more options as needed */}
+              <option value="Avocado">Avocado</option>
+              <option value="Black beans">Black beans</option>
+              
             </select>
           </label>
+
           <label>
             Calorie Limit:
             <div>
-              <button onClick={() => setCalorieLimit(calorieLimit - 50)}>-</button>
+              <button type="button" onClick={decreaseCalorieLimit}>
+                -
+              </button>
               <span>{calorieLimit}</span>
-              <button onClick={() => setCalorieLimit(calorieLimit + 50)}>+</button>
+              <button type="button" onClick={increaseCalorieLimit}>
+                +
+              </button>
             </div>
           </label>
           <button type="submit">Submit</button>
         </form>
       </div>
 
-      {/* Lower half: Recipe Cards */}
       <div className="recipe-container">
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe.recipe.recipeId} {...recipe} />
+        {meals.map((meal) => (
+          <RecipeCard key={meal.recipeid} {...meal} />
         ))}
       </div>
     </div>
   );
 };
 
-const RecipeCard = ({ recipe, ingredientList, nutrionalValue, nutritionModel }) => {
+const RecipeCard = ({ recipeName, description, instructions, preparationTime, cookingTime }) => {
   return (
     <div className="recipe-card">
-      <h2>{recipe.recipeName}</h2>
-      <p>{recipe.description}</p>
-      <p>Instructions: {recipe.instructions}</p>
-      <p>Preparation Time: {recipe.preparationTime} minutes</p>
-      <p>Cooking Time: {recipe.cookingTime} minutes</p>
-      {/* Display other recipe information */}
+      <h2>{recipeName}</h2>
+      <p>{description}</p>
+      <p>Instructions: {instructions}</p>
+      <p>Preparation Time: {preparationTime} minutes</p>
+      <p>Cooking Time: {cookingTime} minutes</p>
     </div>
   );
 };
