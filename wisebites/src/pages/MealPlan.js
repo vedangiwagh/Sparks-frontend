@@ -19,11 +19,9 @@ const MealPlan = () => {
   const increaseCalorieLimit = () => {
     setCalorieLimit((prevCalorieLimit) => prevCalorieLimit + 50);
   };
-
-  useEffect(() => {
-  const handleSubmit = async () => {
+ const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:8080/meals/getMealClientSpecific', {
+      const response = await fetch('http://104.196.35.206:8080/meals/getMealClientSpecific', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,8 +47,9 @@ const MealPlan = () => {
     }
   };
 
-  handleSubmit();
-}, [mealType, recipeType, clientId, clientName, dietRestrictions, calorieLimit]);
+  useEffect(() => {
+    handleSubmit(); // Initial call to fetch meals
+  }, [mealType, recipeType, clientId, clientName, dietRestrictions, calorieLimit]);
 
   return (
     <div className="meal-plan">
@@ -78,6 +77,7 @@ const MealPlan = () => {
             >
               <option value="Avocado">Avocado</option>
               <option value="Black beans">Black beans</option>
+
               
             </select>
           </label>
