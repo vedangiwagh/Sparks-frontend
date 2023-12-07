@@ -8,51 +8,108 @@ const MealPlan = () => {
   const [recipeType, setRecipeType] = useState('');
   const [dietRestrictions, setDietRestrictions] = useState([]);
   const [calorieLimit, setCalorieLimit] = useState(0);
-  const [clientId, setClientId] = useState(0);
-  const [clientName, setClientName] = useState('');
+  const [clientId, setClientId] = useState(2);
+  const [clientName, setClientName] = useState('test');
   const [meals, setMeals] = useState([]);
 
   const decreaseCalorieLimit = () => {
-    setCalorieLimit((prevCalorieLimit) => prevCalorieLimit - 50);
+    setCalorieLimit((prevLimit) => Math.max(prevLimit - 100, 0));
   };
 
   const increaseCalorieLimit = () => {
-    setCalorieLimit((prevCalorieLimit) => prevCalorieLimit + 50);
+    setCalorieLimit((prevLimit) => prevLimit + 100);
   };
- const handleSubmit = async () => {
+ // const handleSubmit = async () => {
+ //    try {
+ //      const response = await fetch('http://localhost:8080/meals/getMealClientSpecific', {
+ //        method: 'POST',
+ //        headers: {
+ //          'Content-Type': 'application/json',
+ //        },
+ //        body: JSON.stringify({
+ //          mealType,
+ //          recipeType,
+ //          clientId,
+ //          clientName,
+ //          dietRestrictions,
+ //          calorieLimit,
+ //        }),
+ //      });
+
+ //      if (!response.ok) {
+ //        throw new Error('Network response was not ok');
+ //      }
+
+ //      const data = await response.json();
+ //      console.log(data)
+ //      setMeals(data);
+ //    } catch (error) {
+ //      console.error('Error fetching meals:', error);
+ //    }
+ //  };
+ const fetchRecipes = async (formData) => {
     try {
-      const response = await fetch('http://104.196.35.206:8080/meals/getMealClientSpecific', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          mealType,
-          recipeType,
-          clientId,
-          clientName,
-          dietRestrictions,
-          calorieLimit,
-        }),
-      });
+      // Adjust the URL to the actual API endpoint for fetching recipes
+      const response = await fetch('http://localhost:8080/meals/getMealClientSpecific', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        mealType: formData.mealType,
+        recipeType: formData.recipeType,
+        clientId: clientId, // Assuming clientId is defined somewhere in your component
+        clientName: clientName, // Assuming clientName is defined somewhere in your component
+        dietRestrictions: formData.dietRestrictions,
+        calorieLimit: formData.calorieLimit,
+      }),
+    });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Failed to fetch recipes');
       }
 
-      const data = await response.json();
-      setMeals(data);
+      const recipes = await response.json();
+      return recipes;
     } catch (error) {
-      console.error('Error fetching meals:', error);
+      console.error('Error fetching recipes:', error);
+      throw error;
     }
   };
+const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    handleSubmit(); // Initial call to fetch meals
-  }, [mealType, recipeType, clientId, clientName, dietRestrictions, calorieLimit]);
+    try {
+      // Assuming formData is an object containing the form data
+      const formData = {
+        mealType,
+          recipeType,
+          dietRestrictions,
+          calorieLimit,
+      };
+
+      const recipes = await fetchRecipes(formData);
+
+      // Update state with the fetched recipes
+      setMeals(recipes);
+console.log(meals)
+      // Reset form fields
+      setMealType('');
+      setRecipeType('');
+      setDietRestrictions([]);
+      setCalorieLimit(0);
+    } catch (error) {
+      // Handle the error, e.g., show an error message to the user
+    }
+  };
+  // useEffect(() => {
+  //   handleSubmit(); // Initial call to fetch meals
+  // }, [mealType, recipeType, clientId, clientName, dietRestrictions, calorieLimit]);
 
   return (
     <div className="meal-plan">
+      <div>
+      {/* Form Part */}
       <div className="form-container">
         <h2>Meal Plan Form</h2>
         <form onSubmit={handleSubmit}>
@@ -77,8 +134,7 @@ const MealPlan = () => {
             >
               <option value="Avocado">Avocado</option>
               <option value="Black beans">Black beans</option>
-
-              
+              {/* Add more options as needed */}
             </select>
           </label>
 
@@ -94,15 +150,18 @@ const MealPlan = () => {
               </button>
             </div>
           </label>
+
           <button type="submit">Submit</button>
         </form>
       </div>
 
+      {/* Response Part */}
       <div className="recipe-container">
         {meals.map((meal) => (
-          <RecipeCard key={meal.recipeid} {...meal} />
+          <RecipeCard key={meal.recipe.recipeid} {...meal.recipe} />
         ))}
       </div>
+    </div>
     </div>
   );
 };
