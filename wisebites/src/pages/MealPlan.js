@@ -11,6 +11,7 @@ const MealPlan = () => {
   const [clientId, setClientId] = useState(2);
   const [clientName, setClientName] = useState('test');
   const [meals, setMeals] = useState([]);
+   const [ingredients, setIngredients] = useState([]);
 
   const decreaseCalorieLimit = () => {
     setCalorieLimit((prevLimit) => Math.max(prevLimit - 100, 0));
@@ -105,7 +106,21 @@ console.log(meals)
   // useEffect(() => {
   //   handleSubmit(); // Initial call to fetch meals
   // }, [mealType, recipeType, clientId, clientName, dietRestrictions, calorieLimit]);
+ useEffect(() => {
+  const fetchRecipes = async () => {
+    try {
+      const ingredientsResponse = await fetch('http://localhost:8080/ingredients');
+      const ingredientsData = await ingredientsResponse.json();
+      setIngredients(ingredientsData);
+      console.log(ingredients);
+    } catch (error) {
+      console.error('Error fetching ingredients:', error);
+    }
+  };
 
+  // Invoke the fetchRecipes function
+  fetchRecipes();
+}, []); // The empty
   return (
     <div className="meal-plan">
 
@@ -126,32 +141,67 @@ console.log(meals)
   <h1>Let's Get a MealPlan for YOU!!!</h1>
       <div className="form-container">
 
-        
+             
         <form onSubmit={handleSubmit}>
-          <label>
-            Meal Type:
-            <input type="text" value={mealType} onChange={(e) => setMealType(e.target.value)} />
-          </label>
+          
+<label>
+  Meal Type:
+  <select
+    value={mealType}
+    onChange={(e) => setMealType(e.target.value)} 
+  >
+    <option value="" disabled>
+      Select a meal type
+    </option>
+    <option value="Main Course">Main Course</option>
+    <option value="Breakfast">Breakfast</option>
+    <option value="Brunch">Brunch</option>
+    <option value="Lunch">Lunch</option>
+    <option value="Dinner">Dinner</option>
+    <option value="Dessert">Dessert</option>
+    <option value="Snacks">Snacks</option>
+  </select>
+</label>
+          
 
           <label>
-            Recipe Type:
-            <input type="text" value={recipeType} onChange={(e) => setRecipeType(e.target.value)} />
-          </label>
+  Recipe Type:
+  <select
+    value={recipeType}
+    onChange={(e) => setRecipeType(e.target.value)}
+  >
+    <option value="" disabled>
+      Select a recipe type
+    </option>
+    <option value="Vegetarian">Vegetarian</option>
+    <option value="Non-Vegetarian">Non-Vegetarian</option>
+    <option value="Sea-Food">Seafood</option>
+    <option value="Vegan">Vegan</option>
+    <option value="Gluten-Free">Gluten-Free</option>
+    <option value="Egg-Free">Egg-Free</option>
+    <option value="Soy-Free">Soy-Free</option>
+    <option value="Nut-Free">Nut-Free</option>
+    <option value="Dairy-Free">Dairy-Free</option>
+  </select>
+</label>
 
           <label>
-            Diet Restrictions:
-            <select
-              multiple
-              value={dietRestrictions}
-              onChange={(e) =>
-                setDietRestrictions(Array.from(e.target.selectedOptions, (option) => option.value))
-              }
-            >
-              <option value="Avocado">Avocado</option>
-              <option value="Black beans">Black beans</option>
-              {/* Add more options as needed */}
-            </select>
-          </label>
+  Diet Restrictions:
+  <select
+    multiple
+    value={dietRestrictions}
+    onChange={(e) =>
+      setDietRestrictions(Array.from(e.target.selectedOptions, (option) => option.value))
+    }
+  >
+    {ingredients.map((ingredient) => (
+      <option key={ingredient._id} value={ingredient._id}>
+        {ingredient.name}
+      </option>
+    ))}
+  </select>
+</label>
+
 
           <label>
             Calorie Limit:

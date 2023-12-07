@@ -297,13 +297,13 @@ if (name === null || name === '') {
     <option value="" disabled>
       Select a meal type
     </option>
-    <option value="main course">Main Course</option>
-    <option value="breakfast">Breakfast</option>
-    <option value="brunch">Brunch</option>
-    <option value="lunch">Lunch</option>
-    <option value="dinner">Dinner</option>
-    <option value="dessert">Dessert</option>
-    <option value="snacks">Snacks</option>
+    <option value="Main Course">Main Course</option>
+    <option value="Breakfast">Breakfast</option>
+    <option value="Brunch">Brunch</option>
+    <option value="Lunch">Lunch</option>
+    <option value="Dinner">Dinner</option>
+    <option value="Dessert">Dessert</option>
+    <option value="Snacks">Snacks</option>
   </select>
 </label>
 
@@ -316,15 +316,15 @@ if (name === null || name === '') {
     <option value="" disabled>
       Select a recipe type
     </option>
-    <option value="vegetarian">Vegetarian</option>
-    <option value="non-vegetarian">Non-Vegetarian</option>
-    <option value="sea-food">Seafood</option>
-    <option value="vegan">Vegan</option>
-    <option value="gluten-free">Gluten-Free</option>
-    <option value="egg-free">Egg-Free</option>
-    <option value="soy-free">Soy-Free</option>
-    <option value="nut-free">Nut-Free</option>
-    <option value="dairy-free">Dairy-Free</option>
+    <option value="Vegetarian">Vegetarian</option>
+    <option value="Non-Vegetarian">Non-Vegetarian</option>
+    <option value="Sea-Food">Seafood</option>
+    <option value="Vegan">Vegan</option>
+    <option value="Gluten-Free">Gluten-Free</option>
+    <option value="Egg-Free">Egg-Free</option>
+    <option value="Soy-Free">Soy-Free</option>
+    <option value="Nut-Free">Nut-Free</option>
+    <option value="Dairy-Free">Dairy-Free</option>
   </select>
 </label>
 
