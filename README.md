@@ -12,7 +12,22 @@ Make sure you have the following libraries/tools installed before running the pr
 ## Instructions to Run
 
 ### 1. Clone the Repository
+Clone the repository
+```bash
+cd wisebites
+```
+### 2. Install Dependencies
 
 ```bash
-git clone <repository-url>
-cd project-directory
+npm install
+```
+### 3. Start the Development Server
+
+```bash
+npm start
+```
+### 4. Explore Project
+Open your web browser and navigate to http://localhost:3000 to view the project.
+
+
+
