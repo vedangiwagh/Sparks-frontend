@@ -148,19 +148,22 @@ if (name === null || name === '') {
     }
   };
 
- const handleAddIngredient = (ingredient) => {
+ const handleAddIngredient = (ingredientid,name) => {
    const updatedIngredientsList = [...formData.ingredientsList, {
-     id: ingredient || null,  // Set to null if ingredient.id is undefined
+     id: ingredientid || null,  // Set to null if ingredient.id is undefined
  // Set to null if ingredient.name is undefined
+        name: name,
      quantity: 1,
    }];
    setFormData({ ...formData, ingredientsList: updatedIngredientsList });
+
  };
 
 
 
  // Function to handle updating the quantity of an ingredient
  const handleUpdateQuantity = (index, newQuantity, e) => {
+ console.log(formData.ingredientsList);
    e.preventDefault();
    const updatedIngredientsList = [...formData.ingredientsList];
    updatedIngredientsList[index].quantity = newQuantity;
@@ -297,13 +300,11 @@ if (name === null || name === '') {
     <option value="" disabled>
       Select a meal type
     </option>
-    <option value="Main Course">Main Course</option>
-    <option value="Breakfast">Breakfast</option>
-    <option value="Brunch">Brunch</option>
-    <option value="Lunch">Lunch</option>
-    <option value="Dinner">Dinner</option>
-    <option value="Dessert">Dessert</option>
-    <option value="Snacks">Snacks</option>
+   <option value="Main Course">Main Course</option>
+       <option value="Breakfast">Breakfast</option>
+       <option value="Appetizer">Appetizer</option>
+       <option value="Soup">Soup</option>
+       <option value="dinner">Dinner</option>
   </select>
 </label>
 
@@ -317,14 +318,11 @@ if (name === null || name === '') {
       Select a recipe type
     </option>
     <option value="Vegetarian">Vegetarian</option>
-    <option value="Non-Vegetarian">Non-Vegetarian</option>
-    <option value="Sea-Food">Seafood</option>
-    <option value="Vegan">Vegan</option>
-    <option value="Gluten-Free">Gluten-Free</option>
-    <option value="Egg-Free">Egg-Free</option>
-    <option value="Soy-Free">Soy-Free</option>
-    <option value="Nut-Free">Nut-Free</option>
-    <option value="Dairy-Free">Dairy-Free</option>
+         <option value="Non-Vegetarian">Non-Vegetarian</option>
+         <option value="sea-food">Seafood</option>
+         <option value="Vegan">Vegan</option>
+         <option value="Gluten-Free">Gluten-Free</option>
+         <option value="soy-free">Soy-Free</option>
   </select>
 </label>
 
@@ -333,14 +331,18 @@ if (name === null || name === '') {
                                      Ingredients:
                                      <select
                                        value=""
-                                       onChange={(e) => handleAddIngredient(e.target.value)}
+                                       onChange={(e) => {
+                                           const [id, name] = e.target.value.split(', ');
+                                           handleAddIngredient(id, name);
+                                         }}
                                      >
                                        <option value="" disabled>
                                          Select an ingredient
                                        </option>
                                        {ingredients.map((ingredient) => (
-                                         <option key={ingredient.id} value={ingredient.id}>
+                                         <option key={ingredient.id} value={`${ingredient.id}, ${ingredient.name}`}>
                                            {ingredient.name}
+
                                          </option>
                                        ))}
                                      </select>

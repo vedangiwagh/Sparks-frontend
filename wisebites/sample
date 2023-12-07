@@ -1,0 +1,24 @@
+curl https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer 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" \
+  -d '{
+     "model": "gpt-3.5-turbo",
+     "messages": [{"role": "user", "content": "get description of caesar salad in one line"}],
+     "temperature": 0.9
+   }'
+
+
+curl https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer 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" \
+  -d '
+    {
+      "model": "gpt-3.5-turbo",
+      "messages": [
+        {
+          "role": "user",
+          "content": "in json format get nutritional model for ingredient paneer in the format below. { id: 3, name: \"Chicken Breast\", calories: 165.0, fat: 3.6, carbohydrates: 0.0, fiber: 0.0, sugar: 0.0, protein: 31.0, sodium: 74.0 }"
+        }
+      ],
+      "temperature": 0.9
+    }'

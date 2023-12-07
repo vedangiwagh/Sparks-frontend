@@ -3,6 +3,7 @@ import '../styles/MealPlan.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+
 const MealPlan = () => {
   const [mealType, setMealType] = useState('');
   const [recipeType, setRecipeType] = useState('');
@@ -61,7 +62,7 @@ const MealPlan = () => {
         recipeType: formData.recipeType,
         clientId: clientId, // Assuming clientId is defined somewhere in your component
         clientName: clientName, // Assuming clientName is defined somewhere in your component
-        dietRestrictions: formData.dietRestrictions,
+        dietRestriction: formData.dietRestrictions,
         calorieLimit: formData.calorieLimit,
       }),
     });
@@ -155,11 +156,10 @@ console.log(meals)
     </option>
     <option value="Main Course">Main Course</option>
     <option value="Breakfast">Breakfast</option>
-    <option value="Brunch">Brunch</option>
-    <option value="Lunch">Lunch</option>
-    <option value="Dinner">Dinner</option>
-    <option value="Dessert">Dessert</option>
-    <option value="Snacks">Snacks</option>
+    <option value="Appetizer">Appetizer</option>
+    <option value="Soup">Soup</option>
+    <option value="dinner">Dinner</option>
+
   </select>
 </label>
           
@@ -175,13 +175,11 @@ console.log(meals)
     </option>
     <option value="Vegetarian">Vegetarian</option>
     <option value="Non-Vegetarian">Non-Vegetarian</option>
-    <option value="Sea-Food">Seafood</option>
+    <option value="sea-food">Seafood</option>
     <option value="Vegan">Vegan</option>
     <option value="Gluten-Free">Gluten-Free</option>
-    <option value="Egg-Free">Egg-Free</option>
-    <option value="Soy-Free">Soy-Free</option>
-    <option value="Nut-Free">Nut-Free</option>
-    <option value="Dairy-Free">Dairy-Free</option>
+    <option value="soy-free">Soy-Free</option>
+
   </select>
 </label>
 
@@ -222,16 +220,23 @@ console.log(meals)
 
       {/* Response Part */}
       <div className="recipe-container">
-        {meals.map((meal) => (
-          <RecipeCard key={meal.recipe.recipeid} {...meal.recipe} />
-        ))}
+        {meals.length > 0 ? (
+          meals.map((meal) => (
+
+            <RecipeCard key={meal.recipe.recipeid} nutritionModel={meal.nutritionModel.calories} {...meal.recipe} />
+
+
+          ))
+        ) : (
+          <p>No meal plan can be generated.</p>
+        )}
       </div>
     </div>
     </div>
   );
 };
 
-const RecipeCard = ({ recipeName, description, instructions, preparationTime, cookingTime }) => {
+const RecipeCard = ({ nutritionModel, recipeName, description, instructions, preparationTime, cookingTime }) => {
   return (
     <div className="recipe-card">
       <h2>{recipeName}</h2>
@@ -239,6 +244,7 @@ const RecipeCard = ({ recipeName, description, instructions, preparationTime, co
       <p>Instructions: {instructions}</p>
       <p>Preparation Time: {preparationTime} minutes</p>
       <p>Cooking Time: {cookingTime} minutes</p>
+      <p>NutritionValue: {nutritionModel}</p>
     </div>
   );
 };
