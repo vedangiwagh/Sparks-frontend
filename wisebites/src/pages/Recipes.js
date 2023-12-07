@@ -186,7 +186,7 @@ if (name === null || name === '') {
         <Link to="/">
           <button className="home-button">Go to Home</button>
         </Link>
-        <Link to="/all-ingredients">
+        <Link to="/ingredients">
           <button className="home-button">See All Ingredients</button>
 
         </Link>
