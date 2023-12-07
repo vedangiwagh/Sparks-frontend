@@ -51,7 +51,7 @@ const MealPlan = () => {
  const fetchRecipes = async (formData) => {
     try {
       // Adjust the URL to the actual API endpoint for fetching recipes
-      const response = await fetch('http://localhost:8080/meals/getMealClientSpecific', {
+      const response = await fetch('http://35.237.216.139:8080/meals/getMealClientSpecific', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ console.log(meals)
  useEffect(() => {
   const fetchRecipes = async () => {
     try {
-      const ingredientsResponse = await fetch('http://localhost:8080/ingredients');
+      const ingredientsResponse = await fetch('http://35.237.216.139:8080/ingredients');
       const ingredientsData = await ingredientsResponse.json();
       setIngredients(ingredientsData);
       console.log(ingredients);

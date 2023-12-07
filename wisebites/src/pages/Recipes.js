@@ -50,7 +50,7 @@ const [formData, setFormData] = useState({
               recipeType: formData.recipeType.toLowerCase(),
               client: client,
                };
-        const recipesResponse = await fetch('http://localhost:8080/recipes', {
+        const recipesResponse = await fetch('http://35.237.216.139:8080/recipes', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const [formData, setFormData] = useState({
         const recipeId = recipeData;
 //console.log(formData.ingredientsList)
         // Step 2: Call /recipe-ingredients/bulk to add ingredients for the created recipe
-        const ingredientsResponse = await fetch('http://localhost:8080/recipe-ingredients/bulk', {
+        const ingredientsResponse = await fetch('http://35.237.216.139:8080/recipe-ingredients/bulk', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -99,11 +99,11 @@ const [formData, setFormData] = useState({
 //     setClient(2);
       const fetchRecipes = async () => {
         try {
-         const ingredientsResponse = await fetch('http://localhost:8080/ingredients');
+         const ingredientsResponse = await fetch('http://35.237.216.139:8080/ingredients');
                 const ingredientsData = await ingredientsResponse.json();
                 setIngredients(ingredientsData);
 console.log(ingredients)
-         const response = await fetch(`http://localhost:8080/recipes/all/${client}`, {
+         const response = await fetch(`http://35.237.216.139:8080/recipes/all/${client}`, {
                    method: 'GET',
                    headers: {
                      'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ if (name === null || name === '') {
       setFilteredRecipes([]);
       return;
     }
-      const response = await fetch(`http://localhost:8080/recipes/byNameAndClient/${name}/${client}`, {
+      const response = await fetch(`http://35.237.216.139:8080/recipes/byNameAndClient/${name}/${client}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
