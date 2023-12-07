@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="center-top-content">
-        <h1>Welcome to the WiseBites App</h1>
+        <h1>Welcome to our Senior Citizen MealPlan Help App!!!!</h1>
       </div>
 
       <div className="app-container">
