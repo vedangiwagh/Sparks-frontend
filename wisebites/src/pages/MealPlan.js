@@ -108,10 +108,25 @@ console.log(meals)
 
   return (
     <div className="meal-plan">
+
       <div>
       {/* Form Part */}
+      <nav className="navbar">
+      <Link to="/">
+                <button className="home-button">Go to Home</button>
+              </Link>
+  <Link to="/recipes">
+                <button className="home-button">See Recipes</button>
+                </Link>
+  <Link to="/ingredients">
+                <button className = "home-button">See all Ingredients</button>
+                </Link>
+
+  </nav>
+  <h1>Let's Get a MealPlan for YOU!!!</h1>
       <div className="form-container">
-        <h2>Meal Plan Form</h2>
+
+        
         <form onSubmit={handleSubmit}>
           <label>
             Meal Type:

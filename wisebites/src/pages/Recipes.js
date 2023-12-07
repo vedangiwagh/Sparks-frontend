@@ -182,6 +182,20 @@ if (name === null || name === '') {
     return (
       <div className="recipes-page">
         <h1>Recipes</h1>
+        <nav className="navbar">
+        <Link to="/">
+          <button className="home-button">Go to Home</button>
+        </Link>
+        <Link to="/all-ingredients">
+          <button className="home-button">See All Ingredients</button>
+
+        </Link>
+        <Link to="/mealPlan">
+          <button className="home-button">Get a MealPlan</button>
+        </Link>
+
+      </nav>
+
          <label>
                 Search for recipe:
                  <input type="text" value={name} placeholder="Type the recipe name" onChange={handleNameChange} />

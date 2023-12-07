@@ -20,9 +20,18 @@ const [ingredients, setIngredients] = useState([]);
   return (
   <div>
   <h1> Ingredient List </h1>
+  <nav className="navbar">
   <Link to="/">
                 <button className="home-button">Go to Home</button>
               </Link>
+  <Link to="/recipes">
+                <button className="home-button">See Recipes</button>
+                </Link>
+  <Link to="/mealPlan">
+                <button className = "home-button">Get a MealPlan</button>
+                </Link>
+
+  </nav>
     <div className="card-container">
       {ingredients.map((ingredient) => (
         <IngredientCard key={ingredient.id} {...ingredient} />
