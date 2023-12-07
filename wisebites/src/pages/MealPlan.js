@@ -21,33 +21,36 @@ const MealPlan = () => {
   };
 
   useEffect(() => {
-    const fetchMeals = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/meals/getMealClientSpecific`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/meals/getMealClientSpecific', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mealType,
+          recipeType,
+          clientId,
+          clientName,
+          dietRestrictions,
+          calorieLimit,
+        }),
+      });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-        setMeals(data);
-      } catch (error) {
-        console.error('Error fetching meals:', error);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
 
-    fetchMeals();
-  }, [mealType, recipeType, clientId, clientName, dietRestrictions, calorieLimit]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can perform additional logic here if needed
+      const data = await response.json();
+      setMeals(data);
+    } catch (error) {
+      console.error('Error fetching meals:', error);
+    }
   };
+
+  handleSubmit();
+}, [mealType, recipeType, clientId, clientName, dietRestrictions, calorieLimit]);
 
   return (
     <div className="meal-plan">
