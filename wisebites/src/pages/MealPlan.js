@@ -255,13 +255,13 @@ const RecipeCard = ({  recipeName, description, instructions, preparationTime, c
 const NutritionCard = ({  calories,fat, carbohydrates, fiber, sugar, protein, sodium }) => {
   return (
     <div className="recipe-card">
-      <h4>Calories:{calories}</h4>
-      <h4>Fat:{fat}</h4>
-      <h4>Carbohydrates:{carbohydrates}</h4>
-      <h4>Fiber:{fiber}</h4>
-      <h4>Sugar:{sugar}</h4>
-      <h4>Protein:{protein}</h4>
-      <h4>Sodum:{sodium}</h4>
+      <h4>Calories:{calories} cal</h4>
+      <h4>Fat:{fat} g</h4>
+      <h4>Carbohydrates:{carbohydrates} g</h4>
+      <h4>Fiber:{fiber} g</h4>
+      <h4>Sugar:{sugar} g</h4>
+      <h4>Protein:{protein} g</h4>
+      <h4>Sodium:{sodium} mg</h4>
       
     </div>
 

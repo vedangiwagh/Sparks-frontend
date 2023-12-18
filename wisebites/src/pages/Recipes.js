@@ -183,7 +183,8 @@ if (name === null || name === '') {
     };
 
     const handleRecipeChange = (e) => {
-    setInputValue(e.target.value);
+    const newValue = e.target.value.replace(/\s/g, '%20');
+        setInputValue(newValue);
   };
 
   const handleRecipe = async (e) => {
