@@ -10,6 +10,8 @@ const Recipes = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [name, setName] = useState('');
     const [ingredients, setIngredients] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -179,11 +181,34 @@ if (name === null || name === '') {
       updatedIngredientsList.splice(index, 1);
       setFormData({ ...formData, ingredientsList: updatedIngredientsList });
     };
+
+    const handleRecipeChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleRecipe = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:8080/recipes/llm/${inputValue}`, {
+        method: 'GET', // or 'POST' depending on your API endpoint
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Handle the response as needed
+      console.log('Server response:', response);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
     return (
       <div className="recipes-page">
         <h1>Recipes</h1>
         <nav className="navbar">
-        <Link to="/">
+        <Link to="/"> 
           <button className="home-button">Go to Home</button>
         </Link>
         <Link to="/ingredients">
@@ -202,26 +227,21 @@ if (name === null || name === '') {
               </label>
 
                <button onClick={handleSearch}>Submit</button>
-        <div className="recipe-container">
-         {filteredRecipes.length === 0 ? (
-         <ul>
-                {recipes.map((recipe) => (
-                            <RecipeCard key={recipe.recipeId} {...recipe} />
-                          ))}
-                          </ul>
-              ) : (
-<ul>
-                  {filteredRecipes.map((recipe) => (
-                             <RecipeCard key={recipe.recipeId} {...recipe} />
-                         ))}
-              </ul>
-              )}
+        
 
-        </div>
-
-        <Link to="/">
-                <button className="home-button">Go to Home</button>
-              </Link>
+        <div>
+      <form onSubmit={handleRecipe}>
+        <label>
+          Input:
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleRecipeChange}
+          />
+        </label>
+        <button type="submit" className="home-button" >Generate Recipe</button>
+      </form>
+    </div>
 
               <div>
                     {/* Button to open the modal */}
@@ -369,6 +389,22 @@ if (name === null || name === '') {
                       <button onClick={closeModal}>Close</button>
                     </Modal>
                   </div>
+                  <div className="recipe-container">
+         {filteredRecipes.length === 0 ? (
+         <ul>
+                {recipes.map((recipe) => (
+                            <RecipeCard key={recipe.recipeId} {...recipe} />
+                          ))}
+                          </ul>
+              ) : (
+<ul>
+                  {filteredRecipes.map((recipe) => (
+                             <RecipeCard key={recipe.recipeId} {...recipe} />
+                         ))}
+              </ul>
+              )}
+
+        </div>
       </div>
     );
   };
