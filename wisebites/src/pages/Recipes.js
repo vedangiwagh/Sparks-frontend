@@ -208,7 +208,7 @@ if (name === null || name === '') {
       <div className="recipes-page">
         <h1>Recipes</h1>
         <nav className="navbar">
-        <Link to="/"> 
+        <Link to="/home">
           <button className="home-button">Go to Home</button>
         </Link>
         <Link to="/ingredients">

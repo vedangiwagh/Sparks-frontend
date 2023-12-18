@@ -21,7 +21,7 @@ const [ingredients, setIngredients] = useState([]);
   <div>
   <h1> Ingredient List </h1>
   <nav className="navbar">
-  <Link to="/">
+  <Link to="/home">
                 <button className="home-button">Go to Home</button>
               </Link>
   <Link to="/recipes">

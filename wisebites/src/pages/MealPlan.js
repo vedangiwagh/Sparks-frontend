@@ -128,7 +128,7 @@ console.log(meals)
       <div>
       {/* Form Part */}
       <nav className="navbar">
-      <Link to="/">
+      <Link to="/home">
                 <button className="home-button">Go to Home</button>
               </Link>
   <Link to="/recipes">
