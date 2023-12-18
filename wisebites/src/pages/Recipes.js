@@ -99,11 +99,11 @@ const [formData, setFormData] = useState({
 //     setClient(2);
       const fetchRecipes = async () => {
         try {
-         const ingredientsResponse = await fetch('http://35.237.216.139:8080/ingredients');
+         const ingredientsResponse = await fetch('http://localhost:8080/ingredients');
                 const ingredientsData = await ingredientsResponse.json();
                 setIngredients(ingredientsData);
 console.log(ingredients)
-         const response = await fetch(`http://35.237.216.139:8080/recipes/all/${client}`, {
+         const response = await fetch(`http://localhost:8080/recipes/all/${client}`, {
                    method: 'GET',
                    headers: {
                      'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ if (name === null || name === '') {
       setFilteredRecipes([]);
       return;
     }
-      const response = await fetch(`http://35.237.216.139:8080/recipes/byNameAndClient/${name}/${client}`, {
+      const response = await fetch(`http://localhost:8080/recipes/byNameAndClient/${name}/${client}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -148,22 +148,19 @@ if (name === null || name === '') {
     }
   };
 
- const handleAddIngredient = (ingredientid,name) => {
+ const handleAddIngredient = (ingredient) => {
    const updatedIngredientsList = [...formData.ingredientsList, {
-     id: ingredientid || null,  // Set to null if ingredient.id is undefined
+     id: ingredient || null,  // Set to null if ingredient.id is undefined
  // Set to null if ingredient.name is undefined
-        name: name,
      quantity: 1,
    }];
    setFormData({ ...formData, ingredientsList: updatedIngredientsList });
-
  };
 
 
 
  // Function to handle updating the quantity of an ingredient
  const handleUpdateQuantity = (index, newQuantity, e) => {
- console.log(formData.ingredientsList);
    e.preventDefault();
    const updatedIngredientsList = [...formData.ingredientsList];
    updatedIngredientsList[index].quantity = newQuantity;
@@ -300,11 +297,13 @@ if (name === null || name === '') {
     <option value="" disabled>
       Select a meal type
     </option>
-   <option value="Main Course">Main Course</option>
-       <option value="Breakfast">Breakfast</option>
-       <option value="Appetizer">Appetizer</option>
-       <option value="Soup">Soup</option>
-       <option value="dinner">Dinner</option>
+    <option value="Main Course">Main Course</option>
+    <option value="Breakfast">Breakfast</option>
+    <option value="Brunch">Brunch</option>
+    <option value="Lunch">Lunch</option>
+    <option value="Dinner">Dinner</option>
+    <option value="Dessert">Dessert</option>
+    <option value="Snacks">Snacks</option>
   </select>
 </label>
 
@@ -318,11 +317,14 @@ if (name === null || name === '') {
       Select a recipe type
     </option>
     <option value="Vegetarian">Vegetarian</option>
-         <option value="Non-Vegetarian">Non-Vegetarian</option>
-         <option value="sea-food">Seafood</option>
-         <option value="Vegan">Vegan</option>
-         <option value="Gluten-Free">Gluten-Free</option>
-         <option value="soy-free">Soy-Free</option>
+    <option value="Non-Vegetarian">Non-Vegetarian</option>
+    <option value="Sea-Food">Seafood</option>
+    <option value="Vegan">Vegan</option>
+    <option value="Gluten-Free">Gluten-Free</option>
+    <option value="Egg-Free">Egg-Free</option>
+    <option value="Soy-Free">Soy-Free</option>
+    <option value="Nut-Free">Nut-Free</option>
+    <option value="Dairy-Free">Dairy-Free</option>
   </select>
 </label>
 
@@ -331,18 +333,14 @@ if (name === null || name === '') {
                                      Ingredients:
                                      <select
                                        value=""
-                                       onChange={(e) => {
-                                           const [id, name] = e.target.value.split(', ');
-                                           handleAddIngredient(id, name);
-                                         }}
+                                       onChange={(e) => handleAddIngredient(e.target.value)}
                                      >
                                        <option value="" disabled>
                                          Select an ingredient
                                        </option>
                                        {ingredients.map((ingredient) => (
-                                         <option key={ingredient.id} value={`${ingredient.id}, ${ingredient.name}`}>
+                                         <option key={ingredient.id} value={ingredient.id}>
                                            {ingredient.name}
-
                                          </option>
                                        ))}
                                      </select>

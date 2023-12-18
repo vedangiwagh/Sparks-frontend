@@ -11,7 +11,7 @@ const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
     // Fetch data from the API
-    fetch('http://35.237.216.139:8080/ingredients')
+    fetch('http://localhost:8080/ingredients')
       .then((response) => response.json())
       .then((data) => setIngredients(data))
       .catch((error) => console.error('Error fetching data:', error));

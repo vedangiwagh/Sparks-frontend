@@ -52,7 +52,7 @@ const MealPlan = () => {
  const fetchRecipes = async (formData) => {
     try {
       // Adjust the URL to the actual API endpoint for fetching recipes
-      const response = await fetch('http://35.237.216.139:8080/meals/getMealClientSpecific', {
+      const response = await fetch('http://localhost:8080/meals/getMealClientSpecific', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ console.log(meals)
  useEffect(() => {
   const fetchRecipes = async () => {
     try {
-      const ingredientsResponse = await fetch('http://35.237.216.139:8080/ingredients');
+      const ingredientsResponse = await fetch('http://localhost:8080/ingredients');
       const ingredientsData = await ingredientsResponse.json();
       setIngredients(ingredientsData);
       console.log(ingredients);
@@ -222,13 +222,17 @@ console.log(meals)
       <div className="recipe-container">
         {meals.length > 0 ? (
           meals.map((meal) => (
-
-            <RecipeCard key={meal.recipe.recipeid} nutritionModel={meal.nutritionModel.calories} {...meal.recipe} />
-
+<div className="meal">
+            <React.Fragment key={meal.recipe.recipeid}>
+            <RecipeCard {...meal.recipe} />
+            <NutritionCard key={meal.recipe.recipeid} {...meal.nutritionModel} />
+            </React.Fragment>
+</div>
 
           ))
         ) : (
           <p>No meal plan can be generated.</p>
+
         )}
       </div>
     </div>
@@ -236,16 +240,31 @@ console.log(meals)
   );
 };
 
-const RecipeCard = ({ nutritionModel, recipeName, description, instructions, preparationTime, cookingTime }) => {
+const RecipeCard = ({  recipeName, description, instructions, preparationTime, cookingTime }) => {
   return (
     <div className="recipe-card">
       <h2>{recipeName}</h2>
-      <p>{description}</p>
+      <p>Description: {description}</p>
       <p>Instructions: {instructions}</p>
       <p>Preparation Time: {preparationTime} minutes</p>
       <p>Cooking Time: {cookingTime} minutes</p>
-      <p>NutritionValue: {nutritionModel}</p>
     </div>
+  );
+};
+
+const NutritionCard = ({  calories,fat, carbohydrates, fiber, sugar, protein, sodium }) => {
+  return (
+    <div className="recipe-card">
+      <h4>Calories:{calories}</h4>
+      <h4>Fat:{fat}</h4>
+      <h4>Carbohydrates:{carbohydrates}</h4>
+      <h4>Fiber:{fiber}</h4>
+      <h4>Sugar:{sugar}</h4>
+      <h4>Protein:{protein}</h4>
+      <h4>Sodum:{sodium}</h4>
+      
+    </div>
+
   );
 };
 

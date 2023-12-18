@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/RecipeCard.css';
 
-const RecipeCard = ({ title, ingredients, image }) => {
+const RecipeCard = ({ title, ingredients, description, image }) => {
   return (
     <div className="recipe-card">
 
@@ -14,13 +14,16 @@ const RecipeCard = ({ title, ingredients, image }) => {
             <li key={index}>{ingredient}</li>
           ))}
         </ul>
+        <p className="recipe-description">{description}</p>
       </div>
+
     </div>
   );
 };
 
 RecipeCard.propTypes = {
   title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
 
 };
